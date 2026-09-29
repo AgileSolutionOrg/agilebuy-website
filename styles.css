@@ -105,9 +105,15 @@ a:hover { color: #4c1d95; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--buy-border);
 }
-.topo__in { display: flex; align-items: center; gap: 28px; height: 74px; }
-.topo__nav { display: flex; gap: 24px; margin-left: auto; }
-.topo__nav a { font-size: 14px; font-weight: 600; color: #374151; }
+.topo__in { display: flex; align-items: center; gap: 20px; height: 74px; }
+.topo__nav { display: flex; gap: 22px; margin-left: auto; }
+/* nowrap: sem isto "Por que AGILE BUY" e "Agile Solution" quebram em duas linhas e o
+   cabecalho fica torto — o simbolo da marca comeu a folga que existia. */
+.topo__nav a { font-size: 14px; font-weight: 600; color: #374151; white-space: nowrap; }
+.nav__contato { display: none; }   /* so aparece dentro do menu do celular */
+/* So no desktop: no celular o botao PRECISA quebrar em duas linhas, senao ele sozinho
+   joga a pagina para 457px numa tela de 390 e o site inteiro rola de lado. */
+@media (min-width: 901px) { .topo__acoes .btn { white-space: nowrap; } }
 .topo__nav a:hover { color: var(--buy-primary-dark); }
 .topo__acoes { display: flex; align-items: center; gap: 10px; }
 
@@ -167,8 +173,10 @@ a:hover { color: #4c1d95; }
 .painel__tela { background: #fff; border-radius: var(--r); padding: 16px; color: var(--buy-text); }
 .painel__kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .mini { background: var(--buy-page); border-radius: 10px; padding: 11px; }
-.mini__r { font-size: 9px; font-weight: 700; letter-spacing: .5px; color: var(--buy-text-2); }
-.mini__v { font-size: clamp(18px, 2.4vw, 23px); font-weight: 700; line-height: 1.2; margin-top: 2px; }
+/* Sao <span>: inline, o margin-top nao valia nada e o numero corria atras da ultima palavra
+   do rotulo ("AGUARDANDO APROVACAO 12"). Como bloco, cada um fica na sua linha. */
+.mini__r { display: block; font-size: 9px; font-weight: 700; letter-spacing: .5px; color: var(--buy-text-2); line-height: 1.3; }
+.mini__v { display: block; font-size: clamp(18px, 2.4vw, 23px); font-weight: 700; line-height: 1.2; margin-top: 2px; }
 .mini__v--roxo { color: var(--buy-primary); }
 .mini__v--verde { color: var(--buy-success-fg); }
 
@@ -381,6 +389,14 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   .hero__in, .dupla { grid-template-columns: minmax(0, 1fr); }
   .hero__in { padding-bottom: 48px; }
   .saving { grid-template-columns: minmax(0, 1fr); }
+  .topo__acoes .btn--fantasma { display: none; }
+}
+
+/* O cabecalho troca para o menu sanduiche a 1180px, e nao a 1000px como o resto do
+   layout: medido, entre 1001px e 1180px os cinco itens do menu nao cabem ao lado da
+   marca e a pagina rolava 93px de lado. Breakpoint de cabecalho e de grade sao coisas
+   diferentes e nao precisam ser o mesmo numero. */
+@media (max-width: 1180px) {
   .topo__nav { display: none; }
   .topo__nav.aberto {
     display: flex; flex-direction: column; gap: 0;
@@ -389,7 +405,6 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   }
   .topo__nav.aberto a { padding: 14px 0; border-bottom: 1px solid var(--buy-border); }
   .menu-botao { display: inline-flex; }
-  .topo__acoes .btn--fantasma { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -399,4 +414,41 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   .fluxo__seta { transform: rotate(90deg); }
   .fluxo__trilha { flex-direction: column; }
   .etapa { width: 100%; }
+}
+
+
+/* ---------------------------------------------------------------------------
+   A MARCA OFICIAL
+   O logo veio em UMA versao: fundo escuro. "AGILE" e "COMPRAS INTELIGENTES" sao
+   brancos, entao o lockup inteiro some num cabecalho branco. Ele nao se recolore
+   — a marca e da Agile Solution e nao se redesenha aqui.
+
+   A saida e a que as marcas usam: o SIMBOLO (violeta e vermelho, legivel sobre
+   qualquer fundo) acompanha o nome em texto no topo claro; o LOCKUP completo vai
+   no rodape, que e escuro, e na imagem de compartilhamento.
+   --------------------------------------------------------------------------- */
+.marca__simbolo {
+  height: 28px; width: auto;
+  flex-shrink: 0;           /* sem isto o simbolo e o primeiro a ser esmagado no celular */
+}
+.rodape__logo {
+  height: 48px; width: auto;
+  display: block;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .marca__simbolo { height: 24px; }
+  .rodape__logo   { height: 40px; }
+  /* O simbolo somou 51px ao cabecalho e empurrou o botao "Fale com a gente" 17px para fora
+     da tela — o site inteiro passava a rolar de lado num celular de 390px. O espaco entre
+     letras da assinatura sozinho custava 68px (3.4px x 20 caracteres); a 2.2px a fonte de
+     8px continua arejada e sobra folga. Medido: 407px -> 383px. */
+  .marca__sub { letter-spacing: 2.2px; }
+
+  /* "Fale com a gente" nao cabe ao lado da marca numa tela de celular: media 114px de
+     altura (tres linhas) a 390px e, a 320 e 360px, forcava a pagina a 375px e punha o
+     site inteiro para rolar de lado. Ele sai do topo e entra no menu, onde se procura
+     contato no celular — o hero continua com o botao grande. */
+  .topo__acoes .btn--primario { display: none; }
+  .topo__nav.aberto .nav__contato { display: block; color: var(--buy-primary); font-weight: 700; }
 }
