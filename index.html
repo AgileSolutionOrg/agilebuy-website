@@ -408,7 +408,12 @@
         </div>
       </div>
 
-      <form class="form" action="https://formsubmit.co/suporte@agilesolution.com.br" method="POST">
+      <!-- O envio e feito por JavaScript para a NOSSA api (ver script.js). O `action` fica como
+           caminho de quem esta sem JavaScript, e `data-fallback` e a segunda camada quando a
+           nossa API nao responde. Terceira camada: o e-mail da propria pessoa, ja preenchido. -->
+      <form class="form" method="POST"
+            action="https://formsubmit.co/suporte@agilesolution.com.br"
+            data-fallback="https://formsubmit.co/suporte@agilesolution.com.br">
         <input type="hidden" name="_subject" value="AGILE BUY — novo contato pelo site">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_template" value="table">

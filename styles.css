@@ -452,3 +452,21 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   .topo__acoes .btn--primario { display: none; }
   .topo__nav.aberto .nav__contato { display: block; color: var(--buy-primary); font-weight: 700; }
 }
+
+/* O aviso do formulário: só aparece quando algo deu errado no envio. Discreto por padrão,
+   vermelho quando é falha — porque nesse momento a pessoa precisa entender que o contato NÃO
+   saiu, e o que fazer a seguir. */
+.form__aviso {
+  grid-column: 1 / -1;
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--buy-text-2);
+}
+.form__aviso:empty { display: none; }
+.form__aviso[data-tipo="erro"] {
+  color: var(--buy-danger-fg);
+  background: var(--buy-danger-bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
