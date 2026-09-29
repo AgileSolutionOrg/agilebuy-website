@@ -56,7 +56,17 @@ ativação para esse endereço, e alguém precisa clicar no link. Antes disso, n
 
 Faça um envio de teste pelo site assim que ele estiver no ar e confirme o e-mail.
 
-### 3. DNS no registro.br
+### 3. O endereço da aplicação — `app.agilebuy.com.br`
+
+O botão **Entrar** aponta para `https://app.agilebuy.com.br/`, que é onde o produto vai rodar.
+**Esse endereço ainda não existe**: falta publicar o `agilebuy-portal` (front) e o `agilebuy`
+(backend) e criar o registro DNS.
+
+Não aponte o Entrar para o Portal da Agile. O Agile Buy é aplicação própria, vendida a empresas
+que não são clientes da Agile — mandá-las para o login de outro produto confunde e não funciona,
+porque elas não têm conta lá.
+
+### 4. DNS no registro.br
 
 Apontar `agilebuy.com.br` para o GitHub Pages:
 
@@ -68,10 +78,17 @@ A     @    185.199.111.153
 CNAME www  agilesolutionorg.github.io
 ```
 
-O arquivo `CNAME` deste repositório já contém `agilebuy.com.br`. Depois da propagação, ligue
-**Enforce HTTPS** nas configurações de Pages do repositório.
+O arquivo `CNAME` deste repositório já contém `agilebuy.com.br`.
 
-### 4. Analytics e Search Console
+**Apague qualquer outro registro A ou AAAA da zona.** Em 29/09 a zona subiu com quatro registros
+extras (`200.160.0.14`, `200.192.232.14` e dois IPv6) que **não respondem** — o navegador sorteia
+um dos oito e, caindo num morto, espera o tempo de conexão antes de tentar outro. Só os quatro
+`185.199.*` devem ficar.
+
+Depois disso o GitHub emite o certificado e o **Enforce HTTPS** pode ser ligado (antes disso a API
+responde *"The certificate does not exist yet"*).
+
+### 5. Analytics e Search Console
 
 Seguir o que o `agiletrade-website` já faz: GA4 e Google Search Console. Ainda não configurados
 aqui.
