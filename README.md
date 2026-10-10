@@ -5,13 +5,16 @@ padrão do `agiletrade-website`, publicado por **GitHub Pages** a partir da bran
 repositório. Custo zero.
 
 ```
-index.html      a página
-obrigado.html   retorno do formulário
-styles.css      tokens do design system + estilos
-script.js       menu do celular, ano do rodapé, animação do fluxo
-CNAME           agilebuy.com.br
-robots.txt      sitemap.xml
-assets/         imagens e ícones
+index.html        a página
+seguranca.html    ficha de segurança e arquitetura para o TI do cliente
+privacidade.html  Política de Privacidade (LGPD)
+termos.html       Termos de Uso do site
+obrigado.html     retorno do formulário
+styles.css        tokens do design system + estilos
+script.js         menu do celular, ano do rodapé, animação do fluxo, envio do formulário
+CNAME             agilebuy.com.br
+robots.txt        sitemap.xml
+assets/           marca, ícones e imagem de compartilhamento
 ```
 
 Para trabalhar: abra `index.html` no navegador. Não há servidor nem passo de build.
@@ -23,50 +26,39 @@ O design system que rege cores, tipografia, componentes e acessibilidade está e
 
 ## PENDÊNCIAS — o que falta para o site ficar completo
 
-### 1. Arquivos da marca (bloqueante para a identidade)
+### 1. Dados da empresa nas páginas legais (bloqueante antes de mostrar a cliente)
 
-A pasta `assets/` está **vazia** e o site hoje mostra apenas o logotipo em texto
-(`AGILE BUY` + `COMPRAS INTELIGENTES`), sem o símbolo. Isso é deliberado: o símbolo do Agile Buy é
-o infinito da Agile em violeta com o ponto vermelho da marca-mãe, e **recriá-lo em código seria
-inventar a marca**. Enquanto o arquivo oficial não entra aqui, é melhor mostrar só a tipografia do
-que mostrar um desenho parecido.
+O rodapé de todas as páginas, a Política de Privacidade, os Termos e a ficha de segurança têm
+campos entre colchetes, destacados em amarelo (classe `.ph`). **Nenhum foi inventado** — precisam
+vir do contrato social e de quem cuida da infraestrutura:
 
-Colocar em `assets/`:
-
-| Arquivo | Uso |
+| Campo | Onde |
 |---|---|
-| `logo-agilebuy.svg` | topo e rodapé |
-| `logo-agilebuy-claro.svg` | versão para fundo escuro |
-| `favicon.png` (512×512) | aba do navegador |
-| `apple-touch-icon.png` (180×180) | atalho no iPhone |
-| `og-image.png` (1200×630) | pré-visualização no WhatsApp e redes |
-| `logo-agile-solution.svg` | assinatura institucional no rodapé |
+| `[RAZÃO SOCIAL]`, `[CNPJ]`, `[ENDEREÇO]` | rodapé (todas as páginas), privacidade, termos |
+| `[E-MAIL DO ENCARREGADO]`, `[NOME DO ENCARREGADO]` | rodapé, privacidade, segurança |
+| `[REGIÃO DO DATACENTER]` | privacidade, segurança |
+| `[PROVEDOR DE E-MAIL]`, `[PAÍS DO PROVEDOR DE E-MAIL]` | privacidade |
+| `[PRAZO DE RETENÇÃO DOS CONTATOS]`, `[POLÍTICA DE BACKUP]` | privacidade, segurança |
+| `[COMARCA DO FORO]` | termos |
 
-Depois de colocá-los, trocar no `index.html` o `<span class="marca__nome">` por `<img>` nos dois
-lugares (topo e rodapé) e conferir o `og:image`.
+Para achar o que falta: `grep -n "class=\"ph\"" *.html`. Quando todos estiverem preenchidos, a
+classe `.ph` pode sair do `styles.css`.
 
-**Sem o `og-image.png`, o link compartilhado no WhatsApp aparece sem imagem.** É o mesmo problema
-que já apareceu em outro produto da casa: não é favicon, é Open Graph.
+### 2. O formulário de contato
 
-### 2. Ativar o FormSubmit (bloqueante para receber lead)
+O envio vai para a nossa API (`https://app.agilebuy.com.br/api/publico/leads`). O FormSubmit
+(`suporte@agilesolution.com.br`) ficou só como **segunda camada**: usado quando a API está fora
+(erro de rede ou 5xx) e para quem está sem JavaScript. Timeout **não** reenvia — a API pode ter
+gravado e só demorado, e reenviar duplicava o lead. Detalhes no comentário do `script.js`.
 
-O formulário envia para `suporte@agilesolution.com.br` via FormSubmit. **O serviço só passa a
-funcionar depois da primeira confirmação:** no primeiro envio, o FormSubmit manda um e-mail de
-ativação para esse endereço, e alguém precisa clicar no link. Antes disso, nenhum lead chega.
+O FormSubmit só entrega depois que o e-mail de ativação for confirmado em
+`suporte@agilesolution.com.br`. Enquanto ele existir, ele aparece como suboperador na Política de
+Privacidade; se for removido, tirar de lá também.
 
-Faça um envio de teste pelo site assim que ele estiver no ar e confirme o e-mail.
+O **Entrar** e a API do formulário dependem de `app.agilebuy.com.br` estar no ar. Não aponte o
+Entrar para o Portal da Agile: o Agile Buy é aplicação própria, vendida a quem não tem conta lá.
 
-### 3. O endereço da aplicação — `app.agilebuy.com.br`
-
-O botão **Entrar** aponta para `https://app.agilebuy.com.br/`, que é onde o produto vai rodar.
-**Esse endereço ainda não existe**: falta publicar o `agilebuy-portal` (front) e o `agilebuy`
-(backend) e criar o registro DNS.
-
-Não aponte o Entrar para o Portal da Agile. O Agile Buy é aplicação própria, vendida a empresas
-que não são clientes da Agile — mandá-las para o login de outro produto confunde e não funciona,
-porque elas não têm conta lá.
-
-### 4. DNS no registro.br
+### 3. DNS no registro.br
 
 Apontar `agilebuy.com.br` para o GitHub Pages:
 
@@ -85,13 +77,13 @@ extras (`200.160.0.14`, `200.192.232.14` e dois IPv6) que **não respondem** —
 um dos oito e, caindo num morto, espera o tempo de conexão antes de tentar outro. Só os quatro
 `185.199.*` devem ficar.
 
-Depois disso o GitHub emite o certificado e o **Enforce HTTPS** pode ser ligado (antes disso a API
-responde *"The certificate does not exist yet"*).
+Depois disso o GitHub emite o certificado e o **Enforce HTTPS** pode ser ligado.
 
-### 5. Analytics e Search Console
+### 4. Analytics e Search Console
 
-Seguir o que o `agiletrade-website` já faz: GA4 e Google Search Console. Ainda não configurados
-aqui.
+Ainda não configurados — e a Política de Privacidade hoje afirma que o site **não usa cookies nem
+analytics**. Se entrar GA4 (ou qualquer medição), a política muda **antes** do script ir ao ar, e
+passa a ser preciso um aviso de consentimento de cookies.
 
 ---
 
@@ -103,3 +95,6 @@ aqui.
   ao AGILE”) ou não vai.
 - O site só publica o que o produto realmente faz. Quem entra pelo site e depois faz login precisa
   reconhecer o que viu.
+- As páginas legais e a ficha de segurança descrevem o que existe. Mudou suboperador (hospedagem,
+  e-mail, formulário), passou a gravar cookie ou mudou o que o agente faz no ERP? Atualize
+  `privacidade.html`/`seguranca.html` e a data “Última atualização” no mesmo commit.
