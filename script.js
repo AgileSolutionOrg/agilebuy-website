@@ -88,7 +88,8 @@
 
    TRÊS CAMADAS, porque a única coisa inaceitável aqui é perder o contato:
      1. envia para a API;
-     2. se a API falhar, cai no destino antigo do formulário (o action do HTML);
+     2. se a API estiver fora (erro de rede ou 5xx), cai no destino antigo do formulário
+        (o action do HTML, FormSubmit). Timeout NÃO cai aqui — ver abaixo;
      3. se isso também falhar, abre o e-mail da pessoa com tudo preenchido e
         mostra o WhatsApp na tela. Nesse ponto o lead está nas mãos dela, mas
         ela SABE disso — que é infinitamente melhor que achar que enviou.
@@ -164,9 +165,35 @@
       _honey: valor('_honey')
     };
 
-    // Um teto de tempo: sem ele, uma API lenta deixa a pessoa olhando "Enviando…".
+    /* Um teto de tempo, para ninguem ficar olhando "Enviando..." para sempre.
+       O que NAO se faz mais e reenviar pelo FormSubmit quando o teto estoura. Timeout nao quer
+       dizer que a API nao recebeu: ela pode ter gravado o lead e so demorado a responder. Antes,
+       com 12 s, isso virava DOIS leads (um na API, outro no FormSubmit). Agora:
+         - erro de rede (a requisicao nem chegou) ou 5xx  -> segunda camada (FormSubmit);
+         - 4xx (a API respondeu e recusou)                -> nao reenvia; pede para corrigir/escrever;
+         - timeout                                        -> nao reenvia; avisa que o envio NAO foi
+                                                             confirmado e oferece o e-mail, sem abrir
+                                                             nada sozinho.
+       O teto subiu para 25 s: e longo o bastante para uma API lenta terminar, e curto o
+       bastante para a pessoa nao desistir sem saber o que aconteceu. */
     var relogio = new AbortController();
-    var estourou = setTimeout(function () { relogio.abort(); }, 12000);
+    var estourou = false;
+    var teto = setTimeout(function () { estourou = true; relogio.abort(); }, 25000);
+
+    function liberarBotao() {
+      if (botao) { botao.disabled = false; botao.textContent = textoOriginal; }
+    }
+
+    function segundaCamada() {
+      // O handler e removido pelo NOME. Antes estava `arguments.callee`, que e proibido em
+      // modo estrito e teria estourado exatamente aqui.
+      var antigo = form.getAttribute('data-fallback');
+      if (!antigo) { saidaDeEmergencia(); return; }
+      avisar('Reenviando por outro caminho…', 'info');
+      form.setAttribute('action', antigo);
+      form.removeEventListener('submit', aoEnviar);
+      HTMLFormElement.prototype.submit.call(form);
+    }
 
     fetch(API, {
       method: 'POST',
@@ -175,28 +202,22 @@
       signal: relogio.signal
     })
       .then(function (r) {
-        clearTimeout(estourou);
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        window.location.href = DESTINO_OK;
+        clearTimeout(teto);
+        if (r.ok) { window.location.href = DESTINO_OK; return; }
+        liberarBotao();
+        if (r.status >= 500) { segundaCamada(); return; }
+        avisar('Não conseguimos registrar o contato (erro ' + r.status + '). Confira os campos e '
+             + 'tente de novo, ou escreva para ' + CONTATO + '.', 'erro');
       })
       .catch(function () {
-        clearTimeout(estourou);
-        if (botao) { botao.disabled = false; botao.textContent = textoOriginal; }
-
-        // Camada 2: o destino antigo do formulário, se ainda estiver configurado.
-        //
-        // O handler e removido pelo NOME. Antes estava `arguments.callee`, que e proibido em
-        // modo estrito e teria estourado exatamente aqui — ou seja, a camada de seguranca so
-        // falharia no momento em que fosse necessaria.
-        var antigo = form.getAttribute('data-fallback');
-        if (antigo) {
-          avisar('Reenviando por outro caminho…', 'info');
-          form.setAttribute('action', antigo);
-          form.removeEventListener('submit', aoEnviar);
-          HTMLFormElement.prototype.submit.call(form);
+        clearTimeout(teto);
+        liberarBotao();
+        if (estourou) {
+          avisar('O envio demorou e não conseguimos confirmar se chegou. Para não duplicar, não '
+               + 'reenviamos sozinhos: se não receber retorno, escreva para ' + CONTATO + '.', 'erro');
           return;
         }
-        saidaDeEmergencia();
+        segundaCamada();   // erro de rede: a requisicao nao chegou a API
       });
   }
 
