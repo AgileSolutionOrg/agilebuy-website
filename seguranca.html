@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segurança e arquitetura | AGILE BUY</title>
+<meta name="description" content="Ficha de segurança do AGILE BUY para o TI: agente on-premises só com conexões de saída HTTPS, permissões mínimas no ERP, TLS, isolamento entre empresas e auditoria.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Agile Solution">
+<meta name="theme-color" content="#0b0b0f">
+<link rel="canonical" href="https://agilebuy.com.br/seguranca.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AGILE BUY">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Segurança e arquitetura | AGILE BUY">
+<meta property="og:description" content="Ficha de segurança do AGILE BUY para o TI: agente on-premises só com conexões de saída HTTPS, permissões mínimas no ERP, TLS, isolamento entre empresas e auditoria.">
+<meta property="og:url" content="https://agilebuy.com.br/seguranca.html">
+<meta property="og:image" content="https://agilebuy.com.br/assets/og-image.png">
+<meta property="og:image:secure_url" content="https://agilebuy.com.br/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<a class="pular" href="/#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="wrap topo__in">
+    <a class="marca" href="/" aria-label="AGILE BUY — página inicial">
+      <img class="marca__simbolo" src="assets/simbolo-agilebuy.png" width="48" height="28"
+           alt="" decoding="async">
+      <span>
+        <span class="marca__nome">AGILE <span>BUY</span></span>
+        <span class="marca__sub">COMPRAS INTELIGENTES</span>
+      </span>
+    </a>
+
+    <nav class="topo__nav" id="nav" aria-label="Principal">
+      <a href="/#produto">Produto</a>
+      <a href="/#aprovacao">Soluções</a>
+      <a href="/#erp">Integrações</a>
+      <a href="/#porque">Por que AGILE BUY</a>
+      <a href="https://www.agilesolution.com.br/" rel="noopener">Agile Solution</a>
+      <a class="nav__entrar" href="https://app.agilebuy.com.br/">Entrar</a>
+      <a class="nav__contato" href="/#contato">Fale com a gente</a>
+    </nav>
+
+    <div class="topo__acoes">
+      <button class="menu-botao" type="button" id="menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <a class="btn btn--fantasma" href="https://app.agilebuy.com.br/">Entrar</a>
+      <a class="btn btn--primario" href="/#contato">Fale com a gente</a>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section class="doc-topo">
+    <div class="wrap">
+      <span class="selo">Para o seu TI</span>
+      <h1>Segurança <em>e arquitetura.</em></h1>
+      <p>Como o AGILE BUY se conecta ao seu ERP sem abrir porta na sua rede, e como os dados ficam protegidos.</p>
+      <p class="doc__data">Última atualização: 10 de outubro de 2026</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <article class="doc">
+      <p style="margin-top:0">Esta ficha resume como o AGILE BUY se conecta ao seu ERP e como protege os
+        dados, para a avaliação do seu time de TI e de segurança da informação. Dúvidas técnicas e
+        questionários de segurança da sua empresa:
+        <a href="mailto:suporte@agilesolution.com.br">suporte@agilesolution.com.br</a>.</p>
+
+      <h2 style="margin-top:44px">1. Arquitetura</h2>
+      <p>São duas partes: a <strong>aplicação na nuvem</strong>, que os usuários acessam pelo navegador
+        ou pelo celular, e o <strong>Agente AGILE</strong>, instalado num servidor da sua rede, que é
+        a única parte que conversa com o ERP.</p>
+      <div class="arq" role="img" aria-label="Usuários acessam a aplicação na nuvem por HTTPS. O Agente AGILE, dentro da rede do cliente, abre conexão de saída HTTPS para a nuvem e acessa o banco do ERP pela rede local.">
+        <div class="arq__bloco">Usuários<small>navegador ou celular</small></div>
+        <div class="arq__seta">↓ HTTPS (TLS)</div>
+        <div class="arq__bloco arq__bloco--buy">AGILE BUY — nuvem<small>app.agilebuy.com.br</small></div>
+        <div class="arq__seta">↑ HTTPS 443 — conexão iniciada pelo agente, de dentro para fora</div>
+        <div class="arq__bloco arq__bloco--agente">Agente AGILE<small>servidor da sua empresa</small></div>
+        <div class="arq__seta">↕ rede local</div>
+        <div class="arq__bloco">Banco de dados do ERP<small>continua sem exposição à internet</small></div>
+      </div>
+
+      <h2>2. O que o agente faz no ERP</h2>
+      <ul>
+        <li>Lê os cadastros que o processo de compras usa: <strong>itens, unidades, fornecedores e
+          centros de custo</strong>.</li>
+        <li>Conforme o escopo definido na implantação, registra no ERP o resultado das compras
+          aprovadas.</li>
+        <li>Toda troca com a nuvem acontece por conexões que o próprio agente inicia.</li>
+      </ul>
+      <p>Integração disponível hoje: <strong>FoccoERP</strong>. Outros ERPs sob consulta.</p>
+
+      <h2>3. Rede e firewall</h2>
+      <ul>
+        <li><strong>Só saída:</strong> HTTPS, TCP 443, para <code>app.agilebuy.com.br</code>. É a única
+          regra a liberar no firewall ou proxy.</li>
+        <li><strong>Nenhuma porta de entrada</strong> é aberta; a nuvem nunca inicia conexão com a sua
+          rede.</li>
+        <li>O banco do ERP não precisa ficar acessível pela internet, e não é preciso VPN.</li>
+      </ul>
+
+      <h2>4. Senha do banco de dados</h2>
+      <ul>
+        <li><strong>Recomendado:</strong> a senha do usuário de banco fica no servidor da sua empresa,
+          na configuração do agente, e não sai da sua rede.</li>
+        <li><strong>Opcional:</strong> guardada na nuvem, cifrada com AES-GCM.</li>
+      </ul>
+
+      <h2>5. Permissões no banco do ERP</h2>
+      <ul>
+        <li>Usuário de banco <strong>exclusivo</strong> para o agente, criado pelo seu DBA.</li>
+        <li>Para leitura, <strong>somente SELECT</strong> nos objetos usados — sem privilégio de DBA e
+          sem permissão para alterar estrutura (DDL).</li>
+        <li>Se o escopo incluir registrar informações no ERP, a permissão de escrita é concedida só
+          nos objetos necessários, listados na implantação para revisão do seu DBA.</li>
+      </ul>
+
+      <h2>6. Dados em trânsito</h2>
+      <p>Todo o tráfego — navegador ↔ nuvem e agente ↔ nuvem — é cifrado com TLS (HTTPS).</p>
+
+      <h2>7. Hospedagem e cópias de segurança</h2>
+      <ul>
+        <li><strong>Hospedagem:</strong> DigitalOcean, região <span class="ph">[REGIÃO DO DATACENTER]</span>.</li>
+        <li><strong>Backups:</strong> <span class="ph">[POLÍTICA DE BACKUP: frequência, retenção, local e teste de restauração]</span>.</li>
+      </ul>
+
+      <h2>8. Separação entre empresas</h2>
+      <p>Cada empresa cliente tem os seus dados separados das demais. Um usuário só enxerga os dados
+        da empresa a que pertence, e essa verificação é feita no servidor a cada requisição — não
+        depende da tela.</p>
+
+      <h2>9. Usuários, permissões e auditoria</h2>
+      <ul>
+        <li>Permissões por papel (por exemplo: solicitante, aprovador, comprador).</li>
+        <li>Segregação de funções: quem solicita não aprova a própria solicitação.</li>
+        <li>Recusa, devolução e escolha de proposta que não é a de menor preço exigem motivo.</li>
+        <li>Cada ação fica registrada com autor, data e hora. A aplicação não permite alterar nem
+          apagar esse histórico — nem para o administrador.</li>
+      </ul>
+
+      <h2>10. Desenvolvimento e dependências</h2>
+      <p>As dependências de software e as imagens de contêiner são monitoradas continuamente
+        (Dependabot e Trivy), e correções de segurança têm prioridade.</p>
+
+      <h2>11. Dados pessoais e incidentes</h2>
+      <p>Na aplicação, a sua empresa é a controladora dos dados e a Agile Solution, a operadora. Os
+        detalhes estão na <a href="privacidade.html">Política de Privacidade</a>. Incidentes de
+        segurança que possam acarretar risco ou dano relevante são comunicados à sua empresa
+        conforme a LGPD e o contrato. Encarregado de dados: <span class="ph">[E-MAIL DO ENCARREGADO]</span>.</p>
+    </article>
+  </div>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div class="rodape__in">
+      <div>
+        <img class="rodape__logo" src="assets/logo-agilebuy.png" width="260" height="48"
+             alt="AGILE BUY — Compras Inteligentes" decoding="async">
+        <div class="rodape__mae">
+          <span class="rodape__assin">Um produto da <strong style="color:#fff">Agile Solution</strong></span>
+        </div>
+        <address class="rodape__empresa">
+          <span class="ph">[RAZÃO SOCIAL]</span> · CNPJ <span class="ph">[CNPJ]</span><br>
+          <span class="ph">[ENDEREÇO]</span><br>
+          Contato: <a href="mailto:suporte@agilesolution.com.br">suporte@agilesolution.com.br</a><br>
+          Encarregado de dados (LGPD): <span class="ph">[E-MAIL DO ENCARREGADO]</span>
+        </address>
+      </div>
+
+      <nav class="rodape__nav" aria-label="Rodapé">
+        <a href="/#produto">Produto</a>
+        <a href="/#aprovacao">Aprovação</a>
+        <a href="/#erp">Integrações</a>
+        <a href="/#porque">Por que AGILE BUY</a>
+        <a href="/#governanca">Governança</a>
+        <a href="/#contato">Contato</a>
+        <a href="https://app.agilebuy.com.br/">Entrar</a>
+        <a href="https://www.agilesolution.com.br/" rel="noopener">Agile Solution</a>
+      </nav>
+    </div>
+
+    <div class="rodape__fim">
+      <span>© <span id="ano">2026</span> Agile Solution. Todos os direitos reservados.</span>
+      <nav class="rodape__legal" aria-label="Documentos">
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="seguranca.html">Segurança</a>
+      </nav>
+      <span>Os números exibidos neste site são demonstrativos.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>

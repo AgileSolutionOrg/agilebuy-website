@@ -110,7 +110,7 @@ a:hover { color: #4c1d95; }
 /* nowrap: sem isto "Por que AGILE BUY" e "Agile Solution" quebram em duas linhas e o
    cabecalho fica torto — o simbolo da marca comeu a folga que existia. */
 .topo__nav a { font-size: 14px; font-weight: 600; color: #374151; white-space: nowrap; }
-.nav__contato { display: none; }   /* so aparece dentro do menu do celular */
+.nav__contato, .nav__entrar { display: none; }   /* so aparecem dentro do menu do celular */
 /* So no desktop: no celular o botao PRECISA quebrar em duas linhas, senao ele sozinho
    joga a pagina para 457px numa tela de 390 e o site inteiro rola de lado. */
 @media (min-width: 901px) { .topo__acoes .btn { white-space: nowrap; } }
@@ -149,7 +149,7 @@ a:hover { color: #4c1d95; }
 }
 .selo {
   display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-  font-size: 11px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: #ddd6fe; background: rgba(124, 58, 237, .18);
   border: 1px solid rgba(167, 139, 250, .45); border-radius: var(--r-pill); padding: 7px 14px;
 }
@@ -168,14 +168,14 @@ a:hover { color: #4c1d95; }
   border-radius: var(--r-lg); padding: 16px;
 }
 .painel__cab {
-  font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #a78bfa; margin-bottom: 12px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #a78bfa; margin-bottom: 12px;
 }
 .painel__tela { background: #fff; border-radius: var(--r); padding: 16px; color: var(--buy-text); }
 .painel__kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .mini { background: var(--buy-page); border-radius: 10px; padding: 11px; }
 /* Sao <span>: inline, o margin-top nao valia nada e o numero corria atras da ultima palavra
    do rotulo ("AGUARDANDO APROVACAO 12"). Como bloco, cada um fica na sua linha. */
-.mini__r { display: block; font-size: 9px; font-weight: 700; letter-spacing: .5px; color: var(--buy-text-2); line-height: 1.3; }
+.mini__r { display: block; font-size: 11px; font-weight: 700; letter-spacing: .5px; color: var(--buy-text-2); line-height: 1.3; }
 .mini__v { display: block; font-size: clamp(18px, 2.4vw, 23px); font-weight: 700; line-height: 1.2; margin-top: 2px; }
 .mini__v--roxo { color: var(--buy-primary); }
 .mini__v--verde { color: var(--buy-success-fg); }
@@ -193,7 +193,7 @@ a:hover { color: #4c1d95; }
 
 .selo-st {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 10px; font-weight: 700; padding: 4px 9px; border-radius: 6px; white-space: nowrap;
+  font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; white-space: nowrap;
 }
 .selo-st::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 .selo-st--aguard { background: var(--buy-warning-bg); color: var(--buy-warning-fg); }
@@ -265,7 +265,7 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   border-radius: 32px; padding: 12px; box-shadow: 0 24px 48px rgba(17, 24, 39, .18);
 }
 .celular__tela { background: #fff; border-radius: 24px; padding: 20px 18px; }
-.celular__cab { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--buy-text-2); margin: 14px 0 12px; }
+.celular__cab { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--buy-text-2); margin: 14px 0 12px; }
 .aprov { border: 1px solid var(--buy-border); border-radius: 13px; padding: 15px; }
 .aprov__n { display: flex; justify-content: space-between; align-items: center; }
 .aprov__n b { font-size: 12px; font-weight: 700; color: var(--buy-primary-dark); }
@@ -315,7 +315,7 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   background: var(--buy-surface-dark); border: 1px solid var(--buy-surface-dark-2);
   font-size: 15px; font-weight: 700;
 }
-.camada small { display: block; font-size: 11px; font-weight: 500; color: var(--buy-text-dark-2); margin-top: 4px; }
+.camada small { display: block; font-size: 13px; font-weight: 500; color: var(--buy-text-dark-2); margin-top: 4px; }
 .camada--buy { background: var(--buy-primary); border-color: var(--buy-primary); }
 .camada--agente { border-color: var(--agile-red); }
 .camadas__seta { color: var(--buy-primary-bright); }
@@ -328,7 +328,7 @@ h2 em { font-style: normal; color: var(--buy-primary); }
 .chip--forte { background: var(--buy-primary); border-color: var(--buy-primary); color: #fff; font-weight: 700; }
 
 .evolucao {
-  display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700;
   letter-spacing: .8px; text-transform: uppercase; color: var(--buy-warning-fg);
   background: var(--buy-warning-bg); border-radius: var(--r-pill); padding: 6px 13px;
 }
@@ -352,16 +352,21 @@ h2 em { font-style: normal; color: var(--buy-primary); }
 .form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .campo { display: flex; flex-direction: column; gap: 6px; }
 .campo--largo { grid-column: 1 / -1; }
-.campo label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--buy-text-2); }
+.campo label { font-size: 13px; font-weight: 600; letter-spacing: .6px; text-transform: uppercase; color: var(--buy-text-2); }
 .campo input, .campo select, .campo textarea {
   font-family: inherit; font-size: 15px; color: var(--buy-text);
   min-height: 48px; padding: 12px 14px;
   border: 1.5px solid var(--buy-border); border-radius: 10px; background: #fff;
 }
 .campo textarea { min-height: 104px; resize: vertical; }
-.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--buy-primary); outline: none; }
+/* O contorno de foco fica: quem navega pelo teclado precisa ver em que campo esta. So a
+   cor da borda mudando (o que havia antes) e sutil demais para isso. */
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--buy-primary); }
+.campo input:focus-visible, .campo select:focus-visible, .campo textarea:focus-visible {
+  outline: 2px solid var(--buy-primary); outline-offset: 2px; border-radius: 10px;
+}
 .form .btn { grid-column: 1 / -1; }
-.form__nota { grid-column: 1 / -1; font-size: 12px; color: var(--buy-text-2); margin: 0; }
+.form__nota { grid-column: 1 / -1; font-size: 13px; color: var(--buy-text-2); margin: 0; }
 
 /* rodapé */
 .rodape { background: var(--buy-bg-dark); color: var(--buy-text-dark-2); padding: 52px 0 32px; }
@@ -377,7 +382,7 @@ h2 em { font-style: normal; color: var(--buy-primary); }
 }
 
 .demo {
-  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 1px;
   text-transform: uppercase; color: var(--buy-text-2);
   border: 1px solid var(--buy-border); border-radius: 6px; padding: 5px 10px;
 }
@@ -390,6 +395,9 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   .hero__in { padding-bottom: 48px; }
   .saving { grid-template-columns: minmax(0, 1fr); }
   .topo__acoes .btn--fantasma { display: none; }
+  /* O Entrar sai do topo abaixo de 1000px; sem isto o cliente que ja usa o produto nao
+     acha mais por onde fazer login no celular. Ele volta dentro do menu. */
+  .topo__nav.aberto .nav__entrar { display: block; }
 }
 
 /* O cabecalho troca para o menu sanduiche a 1180px, e nao a 1000px como o resto do
@@ -470,3 +478,67 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   border-radius: 10px;
   padding: 10px 12px;
 }
+
+/* ---------------------------------------------------------------------------
+   RODAPE: identificacao da empresa e links legais
+   --------------------------------------------------------------------------- */
+.rodape__empresa { margin: 18px 0 0; font-size: 13px; line-height: 1.7; color: var(--buy-text-dark-2); font-style: normal; }
+.rodape__empresa a { color: var(--buy-text-dark); text-decoration: underline; }
+.rodape__legal { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.rodape__legal a { color: var(--buy-text-dark); text-decoration: underline; }
+.rodape__legal a:hover, .rodape__empresa a:hover { color: var(--buy-surface); }
+.form__nota a { text-decoration: underline; }
+
+/* Dado da empresa ainda nao preenchido: tem que saltar aos olhos, para ninguem publicar
+   com o colchete no lugar. */
+.ph {
+  background: var(--buy-warning-bg); color: var(--buy-warning-fg);
+  font-weight: 700; padding: 1px 5px; border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   PAGINAS DE TEXTO (privacidade, termos, seguranca)
+   --------------------------------------------------------------------------- */
+.doc-topo { background: var(--buy-bg-dark); color: var(--buy-surface); padding: clamp(40px, 6vw, 72px) 0 clamp(32px, 5vw, 52px); }
+.doc-topo h1 { margin: 16px 0 0; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+.doc-topo h1 em { font-style: normal; color: var(--buy-primary-bright); }
+.doc-topo p { margin: 14px 0 0; max-width: 62ch; color: var(--buy-text-dark); font-size: 16px; }
+.doc-topo .doc__data { font-size: 13px; color: var(--buy-text-dark-2); }
+
+.doc { max-width: 780px; padding: clamp(36px, 5vw, 64px) 0; font-size: 16px; color: var(--buy-text); }
+.doc h2 { font-size: clamp(22px, 2.6vw, 27px); margin: 44px 0 0; color: var(--buy-text); scroll-margin-top: 90px; }
+.doc h2:first-child { margin-top: 0; }
+.doc h3 { font-size: 17px; margin: 26px 0 0; color: var(--buy-text); }
+.doc p, .doc ul, .doc ol { margin: 12px 0 0; }
+.doc ul, .doc ol { padding-left: 22px; }
+.doc li { margin-bottom: 6px; }
+.doc a { text-decoration: underline; overflow-wrap: anywhere; }
+.doc code { font-size: 14px; background: var(--buy-page); border: 1px solid var(--buy-border); border-radius: 5px; padding: 1px 5px; overflow-wrap: anywhere; }
+.doc__indice { margin-top: 0; padding: 18px 22px; background: var(--buy-page); border: 1px solid var(--buy-border); border-radius: var(--r); }
+.doc__indice ol { margin: 8px 0 0; }
+.doc__nota {
+  margin-top: 16px; padding: 14px 16px; border-radius: var(--r);
+  background: var(--buy-primary-light); border: 1px solid var(--buy-primary-soft); color: var(--buy-text);
+}
+
+/* tabela que vira lista no celular, sem rolar de lado */
+.doc__tabela { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+.doc__tabela th, .doc__tabela td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--buy-border); }
+.doc__tabela th { font-size: 13px; color: var(--buy-text-2); background: var(--buy-page); }
+@media (max-width: 720px) {
+  .doc__tabela thead { display: none; }
+  .doc__tabela, .doc__tabela tbody, .doc__tabela tr, .doc__tabela td { display: block; width: 100%; }
+  .doc__tabela tr { border: 1px solid var(--buy-border); border-radius: var(--r); padding: 6px 0; margin-bottom: 10px; }
+  .doc__tabela td { border: 0; padding: 6px 14px; }
+  .doc__tabela td::before { content: attr(data-r); display: block; font-size: 12px; font-weight: 700; color: var(--buy-text-2); text-transform: uppercase; letter-spacing: .6px; }
+}
+
+/* diagrama de arquitetura da pagina de seguranca */
+.arq { display: grid; gap: 8px; margin-top: 18px; }
+.arq__bloco { padding: 16px 18px; border-radius: var(--r); background: var(--buy-bg-dark); color: var(--buy-surface); font-weight: 700; }
+.arq__bloco small { display: block; margin-top: 4px; font-size: 13px; font-weight: 500; color: var(--buy-text-dark-2); }
+.arq__bloco--buy { background: var(--buy-primary); }
+.arq__bloco--buy small { color: var(--buy-primary-light); }
+.arq__bloco--agente { border: 2px solid var(--agile-red); }
+.arq__seta { text-align: center; font-size: 13px; font-weight: 600; color: var(--buy-primary-dark); }
+.secao--escura .link-claro { color: var(--buy-primary-soft); text-decoration: underline; }
