@@ -110,7 +110,7 @@ a:hover { color: #4c1d95; }
 /* nowrap: sem isto "Por que AGILE BUY" e "Agile Solution" quebram em duas linhas e o
    cabecalho fica torto — o simbolo da marca comeu a folga que existia. */
 .topo__nav a { font-size: 14px; font-weight: 600; color: #374151; white-space: nowrap; }
-.nav__contato { display: none; }   /* so aparece dentro do menu do celular */
+.nav__contato, .nav__entrar { display: none; }   /* so aparecem dentro do menu do celular */
 /* So no desktop: no celular o botao PRECISA quebrar em duas linhas, senao ele sozinho
    joga a pagina para 457px numa tela de 390 e o site inteiro rola de lado. */
 @media (min-width: 901px) { .topo__acoes .btn { white-space: nowrap; } }
@@ -389,7 +389,9 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   .hero__in, .dupla { grid-template-columns: minmax(0, 1fr); }
   .hero__in { padding-bottom: 48px; }
   .saving { grid-template-columns: minmax(0, 1fr); }
-  .topo__acoes .btn--fantasma { display: none; }
+  /* O "Entrar" NAO sai do topo no celular: e por ele que o cliente chega ao sistema. Fica
+     compacto, e tambem aparece dentro do menu. */
+  .topo__acoes .btn--fantasma { padding: 8px 14px; font-size: 14px; }
 }
 
 /* O cabecalho troca para o menu sanduiche a 1180px, e nao a 1000px como o resto do
@@ -451,6 +453,7 @@ h2 em { font-style: normal; color: var(--buy-primary); }
      contato no celular — o hero continua com o botao grande. */
   .topo__acoes .btn--primario { display: none; }
   .topo__nav.aberto .nav__contato { display: block; color: var(--buy-primary); font-weight: 700; }
+  .topo__nav.aberto .nav__entrar { display: block; color: var(--buy-primary); font-weight: 700; }
 }
 
 /* O aviso do formulário: só aparece quando algo deu errado no envio. Discreto por padrão,
@@ -469,4 +472,12 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   background: var(--buy-danger-bg);
   border-radius: 10px;
   padding: 10px 12px;
+}
+
+/* Celular estreito (320-420px): marca + "Entrar" + menu precisam caber sem a pagina rolar de
+   lado. Medido a 320px antes deste bloco: o topo pedia 367px. */
+@media (max-width: 420px) {
+  .marca__sub { display: none; }
+  .topo__acoes { gap: 6px; }
+  .topo__acoes .btn--fantasma { padding: 6px 10px; font-size: 13px; }
 }
