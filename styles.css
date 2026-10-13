@@ -333,6 +333,9 @@ h2 em { font-style: normal; color: var(--buy-primary); }
   background: var(--buy-warning-bg); border-radius: var(--r-pill); padding: 6px 13px;
 }
 
+/* Selo do AGILE Intelligence: a cor da marca, não a de aviso — está no ar, não "em evolução". */
+.evolucao--ia { color: var(--buy-primary-dark); background: var(--buy-primary-light); }
+
 /* IA */
 .ia { background: var(--buy-surface); border: 1px solid var(--buy-border); border-radius: var(--r-lg); padding: 24px; }
 .ia__p {
